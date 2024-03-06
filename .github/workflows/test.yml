@@ -1,26 +1,24 @@
 name: GitHub Actions Demo
 
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
-on: [push]
+on: pull_request
 
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
-      - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
-      - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: echo "💡 The ${{ github.repository }} repository has been cloned to the runner."
-      - run: echo "🖥️ The workflow is now ready to test your code on the runner."
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-      - run: echo "🍏 This job's status is ${{ job.status }}."
-      - name: Check out repository code
+      - name: Fetch Base Branch Latest Commit
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
-      - run: |
-          git diff --name-only origin/main origin/${GITHUB_HEAD_REF} --
+          ref: ${{ github.event.pull_request.base.ref }}
+          fetch-depth: 1
 
+      # マージブランチのチェックアウト（デフォはgithub.shaに向いてる）
+      - name: Checkout Pull Request
+        uses: actions/checkout@v4
 
+      - name: Notice diff files
+        id: skip-test
+        run: |-
+          diff=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }})
+          echo "::notice diff: $diff"
+        
