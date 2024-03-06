@@ -19,6 +19,6 @@ jobs:
           ls ${{ github.workspace }}
       - run: echo "🍏 This job's status is ${{ job.status }}."
       - run: |
-          git diff HEAD^ --name-only
+          git diff --name-only HEAD^
 
 
