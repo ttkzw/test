@@ -18,7 +18,7 @@ jobs:
       - name: Find changed files
         id: files
         run: |
-          git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data | awk '{if(f==""){f=$1}else{f=sprintf("%s %s",f,$1)}}END{print f}' >> $GITHUB_OUTPUT
+          git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data | awk '{if(f==""){f=$1}else{f=sprintf("%s %s",f,$1)}}END{printf "files=\"%s\"",f}' >> $GITHUB_OUTPUT
       - name: Print files
         run: for f in "${FILES}"; do n=$(dirname ${f});n=${n%%.md};echo "${n}:${f}"; done
         env:
