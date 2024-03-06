@@ -21,7 +21,7 @@ jobs:
         id: files
         run: |
           git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data/ | awk '{f=sprintf("%s %s",f,$1)}END{printf "files=\"%s\"\n",f}' >> $GITHUB_OUTPUT
-      - name: cat data/file1
+      - name: cat data/file1.md
         if: ${{ contains(env.FILES, 'data/file1.md') }}
         env:
           FILES: ${{ steps.files.outputs.files }}
