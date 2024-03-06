@@ -8,18 +8,18 @@ jobs:
     outputs:
       files: ${{ steps.files.outputs.files }}
     steps:
-      - name: Fetch Base Branch Latest Commit
+      - name: Checkout Base Branch
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.ref }}
-      - name: Checkout Pull Request
+      - name: Checkout Pull Request Branch
         uses: actions/checkout@v4
 
       - name: Find changed files
         id: files
-        run: |-
+        run: |
           files=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data)
-          echo "files=$files" >> $GITHUB_OUTPUT
+          echo $files | awk '{if(f==""){f=$1}else{f=sprintf("%s %s",f,$1)}}END{print f}' >> $GITHUB_OUTPUT
       - name: Print files
         run: for f in "${FILES}"; do n=$(dirname ${f});n=${n%%.md};echo "${n}:${f}"; done
         env:
