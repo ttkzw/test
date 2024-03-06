@@ -5,20 +5,22 @@ on: pull_request
 jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
+    outputs:
+      files: ${{ steps.files.outputs.files }}
     steps:
       - name: Fetch Base Branch Latest Commit
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.base.ref }}
-          fetch-depth: 1
-
-      # マージブランチのチェックアウト（デフォはgithub.shaに向いてる）
       - name: Checkout Pull Request
         uses: actions/checkout@v4
 
-      - name: Notice diff files
-        id: skip-test
+      - name: Find changed files
+        id: files
         run: |-
-          diff=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }})
-          echo "::notice diff: $diff"
-        
+          files=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data)
+          echo "::set-output name=files::$files"
+      - name: Print files
+        run: echo "${FILES}"
+        env:
+          FILES: ${{ steps.files.outputs.files }}
