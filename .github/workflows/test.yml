@@ -23,3 +23,9 @@ jobs:
         run: for f in "${FILES}"; do n=$(dirname ${f});n=${n%%.md};echo "${n}:${f}"; done
         env:
           FILES: ${{ steps.files.outputs.files }}
+      - name: Do file1
+        if: ${{ contains(env.FILES, 'file1') }}
+        run: cat data/file1.md
+        env:
+          FILES: ${{ steps.files.outputs.files }}
+        
