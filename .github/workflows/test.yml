@@ -21,6 +21,6 @@ jobs:
           files=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data)
           echo "files=$files" >> $GITHUB_OUTPUT
       - name: Print files
-        run: for f in "${FILES}"; do echo "${f##data/}:${f}; done
+        run: for f in "${FILES}"; do echo "${f##data/}:${f}"; done
         env:
           FILES: ${{ steps.files.outputs.files }}
