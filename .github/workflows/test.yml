@@ -31,4 +31,8 @@ jobs:
         env:
           FILES: ${{ steps.files.outputs.files }}
         run: cat data/file2.md
-        
+      - name: cat data/file3.md
+        if: ${{ contains(env.FILES, 'data/file3.md') }}
+        env:
+          FILES: ${{ steps.files.outputs.files }}
+        run: cat data/file3.md
