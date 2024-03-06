@@ -1,6 +1,8 @@
 name: GitHub Actions Demo
 
-on: pull_request
+on:
+  pull_request:
+    paths: 'data/*.md'
 
 jobs:
   Explore-GitHub-Actions:
@@ -18,14 +20,15 @@ jobs:
       - name: Find changed files
         id: files
         run: |
-          git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data | awk '{if(f==""){f=$1}else{f=sprintf("%s %s",f,$1)}}END{printf "files=\"%s\"",f}' >> $GITHUB_OUTPUT
-      - name: Print files
-        run: for f in "${FILES}"; do n=$(dirname ${f});n=${n%%.md};echo "${n}:${f}"; done
+          git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data/ | awk '{f=sprintf("%s %s",f,$1)}END{printf "files=\"%s\"\n",f}' >> $GITHUB_OUTPUT
+      - name: cat data/file1
+        if: ${{ contains(env.FILES, 'data/file1.md') }}
         env:
           FILES: ${{ steps.files.outputs.files }}
-      - name: Do file1
-        if: ${{ contains(env.FILES, 'file1') }}
         run: cat data/file1.md
+      - name: cat data/file2.md
+        if: ${{ contains(env.FILES, 'data/file2.md') }}
         env:
           FILES: ${{ steps.files.outputs.files }}
+        run: cat data/file2.md
         
