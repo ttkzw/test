@@ -17,10 +17,15 @@ jobs:
       - name: Checkout Pull Request Branch
         uses: actions/checkout@v4
 
+      #- name: Find changed files
+      #  id: files
+      #  run: |
+      #    git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data/ | awk '{f=sprintf("%s %s",f,$1)}END{printf "files=\"%s\"\n",f}' >> $GITHUB_OUTPUT
       - name: Find changed files
         id: files
         run: |
-          git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data/ | awk '{f=sprintf("%s %s",f,$1)}END{printf "files=\"%s\"\n",f}' >> $GITHUB_OUTPUT
+          files=$(git diff --name-only origin/${{ github.event.pull_request.base.ref }}..${{ github.sha }} -- data/ | tr '\n' ' ')
+          echo "files=${files}" >> $GITHUB_OUTPUT
       - name: cat data/file1.md
         if: ${{ contains(env.FILES, 'data/file1.md') }}
         env:
@@ -31,4 +36,8 @@ jobs:
         env:
           FILES: ${{ steps.files.outputs.files }}
         run: cat data/file2.md
-        
+      - name: cat data/file3.md
+        if: ${{ contains(env.FILES, 'data/file3.md') }}
+        env:
+          FILES: ${{ steps.files.outputs.files }}
+        run: cat data/file3.md
