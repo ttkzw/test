@@ -16,11 +16,11 @@ jobs:
         run: echo Hello, world!
 
   on_schedule:
+    if: github.event.schedule == '*/10 4 13 3 *'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Run a multi-line script
-        if: github.event.schedule == '*/10 4 13 3 *'
         run: echo "on schedule ${TEST}"
         env:
           TEST: test # TEST VAR
