@@ -14,7 +14,7 @@ jobs:
         run: echo Hello, world!
 
   on_schedule:
-    if: github.event.schedule == '*/10 4 13 3 *'
+    if: github.event.schedule == '*/10 5 13 3 *'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
