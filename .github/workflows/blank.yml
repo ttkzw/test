@@ -13,7 +13,7 @@ jobs:
       - name: Run a one-line script
         run: echo Hello, world!  ${TEST}
         env:
-          TEST: test # TEST VAR
+          TEST: "@host=test" # TEST VAR
 
   on_schedule:
     if: github.event.schedule == '*/10 5 13 3 *'
