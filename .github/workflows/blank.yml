@@ -25,5 +25,7 @@ jobs:
           TEST2=test2
           echo "TEST=${TEST}"
           echo "TEST2=${TEST2}"
+          env
+          pwd
         env:
           TEST: test # TEST VAR
