@@ -16,11 +16,14 @@ jobs:
           TEST: "@host=test" # TEST VAR
 
   on_schedule:
-    if: github.event.schedule == '*/10 5 13 3 *'
+    #if: github.event.schedule == '*/10 5 13 3 *'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - name: Run a multi-line script
-        run: echo "on schedule ${TEST}"
+        run: |
+          TEST2=test2
+          echo "TEST=${TEST}"
+          echo "TEST2=${TEST2}"
         env:
           TEST: test # TEST VAR
