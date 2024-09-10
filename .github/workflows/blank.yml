@@ -22,10 +22,11 @@ jobs:
       - uses: actions/checkout@v4
       - name: Run a multi-line script
         run: |
+          echo "PID=$$"
           TEST2=test2
           echo "TEST=${TEST}"
           echo "TEST2=${TEST2}"
-          env
-          pwd
+          echo "PID=$$"
+          echo "SHELL=$SHELL"
         env:
           TEST: test # TEST VAR
