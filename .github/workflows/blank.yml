@@ -9,7 +9,7 @@ jobs:
   on_dispatch:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run a one-line script
         run: echo Hello, world!  ${TEST}
         env:
@@ -19,7 +19,7 @@ jobs:
     #if: github.event.schedule == '*/10 5 13 3 *'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Run a multi-line script
         run: |
           TEST2=test2
