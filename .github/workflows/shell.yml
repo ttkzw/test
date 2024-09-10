@@ -1,0 +1,11 @@
+name: shell script
+on:
+  workflow_dispatch:
+jobs:
+  on_schedule:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run a shell script
+        run: |
+          echo "PID=$$"
+          ps auxwww | grep "$$"
