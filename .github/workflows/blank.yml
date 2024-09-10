@@ -28,5 +28,6 @@ jobs:
           echo "TEST2=${TEST2}"
           echo "PID=$$"
           echo "SHELL=$SHELL"
+          ps auxf | grep "$$"
         env:
           TEST: test # TEST VAR
