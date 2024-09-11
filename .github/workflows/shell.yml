@@ -5,6 +5,8 @@ jobs:
   shell_script:
     runs-on: ubuntu-latest
     steps:
-      - run: |
+      - name: Run a shell script
+        run: |
           script=$0
+          echo "script=${script}"
           cat ${script}
