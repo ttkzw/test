@@ -1,14 +1,10 @@
-name: shell script
+name: Shell Script
 on:
   workflow_dispatch:
 jobs:
   shell_script:
     runs-on: ubuntu-latest
     steps:
-      - name: Run a shell script
-        run: |
-          echo "PID=$$"
-          echo "SCRIPT=$0"
-          cat $0
-        env:
-          TEST: test
+      - run: |
+          script=$0
+          cat ${script}
