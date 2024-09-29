@@ -8,6 +8,5 @@ jobs:
       - name: Run a shell script
         run: |
           cat /proc/$$/cmdline
-          script=$0
-          echo "script=${script}"
-          cat ${script}
+          echo
+          cat $0
