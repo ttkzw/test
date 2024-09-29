@@ -1,24 +1,13 @@
 name: Shell Script
 on:
   workflow_dispatch:
-    inputs:
-      param:
-        type: choice
-        required: true
-        options:
-          - "aaa"
-          - "bbb"
-
-env:
-  PARAM: ${{ inputs.param }}
-
 jobs:
   shell_script:
     runs-on: ubuntu-latest
     steps:
       - name: Run a shell script
-        run: echo ${{ env.PARAM }}
-#        run: |
-#          script=$0
-#          echo "script=${script}"
-#          cat ${script}
+        run: |
+          cat /proc/$$/cmdline
+          script=$0
+          echo "script=${script}"
+          cat ${script}
